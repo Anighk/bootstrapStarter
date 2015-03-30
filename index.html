@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script  src="js/jquery.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="thirdparty/layer/layer.min.js"></script>
+    <script>
+        $(function () {
+            $('li.navbars').hover(function () {
+                        $(this).addClass("active");
+                    }, function () {
+                        $(this).removeClass("active");
+                    }
+            );
+        });
+        function toEditMember(){
+            $.layer({
+                type: 2,
+                maxmin: true,
+                shadeClose: true,
+                title: '修改会员',
+                shade: [0.1,'#fff'],
+                offset: ['100px',''],
+                area: ['700px', ($(window).height() - 200) +'px'],
+                iframe: {src: 'user_edit.html'}
+            });
+        }
+        function toRenew(){
+            $.layer({
+                type: 2,
+                maxmin: true,
+                shadeClose: true,
+                title: '续费',
+                shade: [0.1,'#fff'],
+                offset: ['100px',''],
+                area: ['700px', ($(window).height() - 240) +'px'],
+                iframe: {src: 'renew.html'}
+            });
+        }
+        function toRenew_history(){
+            $.layer({
+                type: 2,
+                maxmin: true,
+                shadeClose: true,
+                title: '续费',
+                shade: [0.1,'#fff'],
+                offset: ['100px',''],
+                area: ['700px', ($(window).height() - 240) +'px'],
+                iframe: {src: 'renew_history.html'}
+            });
+        }
+        function table_fy(p){
+            var form = document.getElementById("search_form");
+            form.option.value=document.getElementById("option").value;
+            form.keyWord.value=document.getElementById("keyWord").value;
+            form.startdt.value=document.getElementById("startdt").value;
+            form.enddt.value=document.getElementById("enddt").value;
+            form.pageNow.value=p;
+            form.submit();
+        }
+        function sort(divid){
+           var sortWord= sortSelect(divid)+swtichUpDowm(divid);
+            alert(sortWord);
+        }
+
+        function swtichUpDowm(divid){
+            var strClass=$("#"+divid).prop("class");
+            if(strClass.indexOf("up")>=0){
+                $("#"+divid).removeClass("glyphicon-arrow-up").addClass("glyphicon-arrow-down");
+                return " desc";
+            }else if(strClass.indexOf("down")>=0){
+                $("#"+divid).removeClass("glyphicon-arrow-down").addClass("glyphicon-arrow-up");
+                return "";
+            }
+        }
+
+        function sortSelect(divid){
+            var otherid="";
+            var sortColumn="";
+            if(divid=="regdt"){
+                otherid="overdt";
+                sortColumn=" nvl(to_char(reg_date,'yyyy-MM-dd'),'1000-01-01')";
+            }else if(divid=="overdt"){
+                otherid="regdt";
+                sortColumn=" nvl(to_char(overdue_date,'yyyy-MM-dd'),'1000-01-01')";
+            }
+            $("#"+divid).removeClass("grey_color");
+            $("#"+otherid).addClass("grey_color");
+            return sortColumn;
+        }
+    </script>
+    <title>用户管理</title>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header" style="margin-top: 5px;">
+                <img class="img-rounded" src="images/logo.jpg" width="40px;" height="40px;" >
+            </div>
+            <div class="navbar-header" style="margin-left: 10px;">
+                <a class="navbar-brand" href="login.html">专利通管理工具</a>
+            </div>
+            <div class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li class="navbars"><a href="index.html"><span class="glyphicon glyphicon-user"></span><span style="margin-left: 8px;">用户管理</span></a></li>
+                    <li class="navbars"><a href="anls_member.html"><span class="glyphicon glyphicon-edit"></span><span style="margin-left: 8px;">访问统计</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main">
+        <div class="row"  style="padding-bottom:8px;border-bottom: solid 1px #eee;">
+            <div class="col-md-12">
+                <a class="btn btn-primary disabled" href="#" role="button">添加会员</a>
+                <a class="btn btn-primary" href="#" role="button">查询续费信息</a>
+            </div>
+        </div>
+        <form class="form-inline form_block">
+            <div class="form-group">
+                <label>到期时间：</label>
+                <input class="form-control" type="date">
+                <label> - </label>
+                <input class="form-control" type="date">
+            </div>
+            <div class="form-group space_left">
+                <select class="form-control">
+                    <option value="">会员等级</option>
+                    <option value="1">VIP用户</option>
+                    <option value="0">普通用户</option>
+                </select>
+                <select class="form-control" >
+                    <option value="">销售经理</option>
+                    <option value="陈冰梦">陈冰梦</option>
+                    <option value="胡永兰">胡永兰</option>
+                    <option value="祖艺航">祖艺航</option>
+                </select>
+            </div>
+            <div class="form-group pull-right">
+                <select class="form-control" id="option">
+                    <option>机器码</option>
+                    <option>用户名</option>
+                    <option>省份</option>
+                    <option>城市</option>
+                    <option>备注</option>
+                    <option>设备型号</option>
+                </select>
+                <input class="form-control" type="text" id="keyWord">
+                <a class="btn btn-primary" href="#" role="button">搜索</a>
+            </div>
+        </form>
+        <table class="table table_block">
+            <thead class="table-bordered table_header">
+                <tr>
+                    <th><input class="checkbox" type="checkbox"></th>
+                    <th>用户ID</th>
+                    <th>机器码</th>
+                    <th>用户名</th>
+                    <th>注册时间<a href="javascript:sort('regdt');"><span class="glyphicon glyphicon-arrow-up grey_color" id="regdt"></span></a> </th>
+                    <th>到期时间<a href="javascript:sort('overdt');"><span class="glyphicon glyphicon-arrow-up" id="overdt"></span></a></th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input class="checkbox" type="checkbox"></td>
+                    <td>1234</td>
+                    <td>efdshviuerg98vaksdf</td>
+                    <td>九江局1</td>
+                    <td>2014.02.05</td>
+                    <td>2015.02.05</td>
+                    <td><a href="javascript:toRenew();">[续费]</a> <a href="javascript:toRenew_history();">[历史续费信息]</a> <a href="javascript:toEditMember();">[修改]</a> </td>
+                </tr>
+                <tr>
+                    <td><input class="checkbox" type="checkbox"></td>
+                    <td>1234</td>
+                    <td>efdshviuerg98vaksdf</td>
+                    <td>九江局1</td>
+                    <td>2014.02.05</td>
+                    <td>2015.02.05</td>
+                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                </tr>
+                <tr>
+                    <td><input class="checkbox" type="checkbox"></td>
+                    <td>1234</td>
+                    <td>efdshviuerg98vaksdf</td>
+                    <td>九江局1</td>
+                    <td>2014.02.05</td>
+                    <td>2015.02.05</td>
+                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                </tr>
+                <tr>
+                    <td><input class="checkbox" type="checkbox"></td>
+                    <td>1234</td>
+                    <td>efdshviuerg98vaksdf</td>
+                    <td>九江局1</td>
+                    <td>2014.02.05</td>
+                    <td>2015.02.05</td>
+                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                </tr>
+                <tr>
+                    <td><input class="checkbox" type="checkbox"></td>
+                    <td>1234</td>
+                    <td>efdshviuerg98vaksdf</td>
+                    <td>九江局1</td>
+                    <td>2014.02.05</td>
+                    <td>2015.02.05</td>
+                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                </tr>
+                <tr class="table-bordered table_bottom">
+                    <td colspan="7"><a class="btn btn-primary disabled" href="#" role="button" style="width: 100px;">删除</a> </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul class="pagination pull-right">
+            <li><span class="pagination_total">共<span class="span_number">5468</span>条记录</span></li>
+            <li><a href="#">上一页</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li class="active"><a  href="#">3<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li class="disabled"><a href="#">...</a></li>
+            <li><a href="#">500</a></li>
+            <li><a href="#">下一页</a></li>
+        </ul>
+    </div>
+    <div class="hidden_div" id="pageNow">${pageNow}</div>
+    <div class="hidden_div" id="pageSize">${pageSize}</div>
+    <div class="hidden_div" id="sortWord">${sortWord}</div>
+    <form action="findMember.do" id="search_form" method="post">
+        <input type="hidden" name="option"/>
+        <input type="hidden" name="keyWord" />
+        <input type="hidden" name="startdt" />
+        <input type="hidden" name="enddt" />
+        <input type="hidden" name="pageSize" />
+        <input type="hidden" name="pageNow" />
+    </form>
+</body>
+</html>
