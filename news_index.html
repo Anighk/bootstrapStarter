@@ -19,42 +19,7 @@
                     }
             );
         });
-        function toEditMember(){
-            $.layer({
-                type: 2,
-                maxmin: true,
-                shadeClose: true,
-                title: '修改会员',
-                shade: [0.1,'#fff'],
-                offset: ['100px',''],
-                area: ['700px', ($(window).height() - 200) +'px'],
-                iframe: {src: 'user_edit.html'}
-            });
-        }
-        function toRenew(){
-            $.layer({
-                type: 2,
-                maxmin: true,
-                shadeClose: true,
-                title: '续费',
-                shade: [0.1,'#fff'],
-                offset: ['100px',''],
-                area: ['700px', ($(window).height() - 240) +'px'],
-                iframe: {src: 'renew.html'}
-            });
-        }
-        function toRenew_history(){
-            $.layer({
-                type: 2,
-                maxmin: true,
-                shadeClose: true,
-                title: '续费',
-                shade: [0.1,'#fff'],
-                offset: ['100px',''],
-                area: ['700px', ($(window).height() - 240) +'px'],
-                iframe: {src: 'renew_history.html'}
-            });
-        }
+
         function table_fy(p){
             var form = document.getElementById("search_form");
             form.option.value=document.getElementById("option").value;
@@ -81,21 +46,14 @@
         }
 
         function sortSelect(divid){
-            var otherid="";
             var sortColumn="";
-            if(divid=="regdt"){
-                otherid="overdt";
-                sortColumn=" nvl(to_char(reg_date,'yyyy-MM-dd'),'1000-01-01')";
-            }else if(divid=="overdt"){
-                otherid="regdt";
-                sortColumn=" nvl(to_char(overdue_date,'yyyy-MM-dd'),'1000-01-01')";
+            if(divid=="reldt"){
+                sortColumn=" nvl(to_char(release_date,'yyyy-MM-dd'),'1000-01-01')";
             }
-            $("#"+divid).removeClass("grey_color");
-            $("#"+otherid).addClass("grey_color");
             return sortColumn;
         }
     </script>
-    <title>用户管理</title>
+    <title>新闻管理</title>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -119,38 +77,23 @@
     <div class="container main">
         <div class="row"  style="padding-bottom:8px;border-bottom: solid 1px #eee;">
             <div class="col-md-12">
-                <a class="btn btn-primary disabled" href="#" style="width: 100px;" role="button">添加会员</a>
-                <a class="btn btn-primary" href="#" role="button">查询续费信息</a>
+                <a class="btn btn-primary" href="news_add.html" style="width: 100px;" role="button">添加新闻</a>
             </div>
         </div>
         <form class="form-inline form_block">
             <div class="form-group">
-                <label>到期时间：</label>
+                <label>发布时间：</label>
                 <input class="form-control" type="date">
                 <label> - </label>
                 <input class="form-control" type="date">
             </div>
-            <div class="form-group space_left">
-                <select class="form-control">
-                    <option value="">会员等级</option>
-                    <option value="1">VIP用户</option>
-                    <option value="0">普通用户</option>
-                </select>
-                <select class="form-control" >
-                    <option value="">销售经理</option>
-                    <option value="陈冰梦">陈冰梦</option>
-                    <option value="胡永兰">胡永兰</option>
-                    <option value="祖艺航">祖艺航</option>
-                </select>
-            </div>
             <div class="form-group pull-right">
                 <select class="form-control" id="option">
-                    <option>机器码</option>
-                    <option>用户名</option>
-                    <option>省份</option>
-                    <option>城市</option>
-                    <option>备注</option>
-                    <option>设备型号</option>
+                    <option>新闻ID</option>
+                    <option>标题</option>
+                    <option>作者</option>
+                    <option>内容</option>
+                    <option>来源</option>
                 </select>
                 <input class="form-control" type="text" id="keyWord">
                 <a class="btn btn-primary" href="#" role="button">搜索</a>
@@ -160,11 +103,11 @@
             <thead class="table-bordered table_header">
                 <tr>
                     <th><input class="checkbox" type="checkbox"></th>
-                    <th>用户ID</th>
-                    <th>机器码</th>
-                    <th>用户名</th>
-                    <th>注册时间<a href="javascript:sort('regdt');"><span class="glyphicon glyphicon-arrow-up grey_color" id="regdt"></span></a> </th>
-                    <th>到期时间<a href="javascript:sort('overdt');"><span class="glyphicon glyphicon-arrow-up" id="overdt"></span></a></th>
+                    <th>新闻ID</th>
+                    <th>标题</th>
+                    <th>作者</th>
+                    <th>来源</th>
+                    <th>发布时间<a href="javascript:sort('reldt');"><span class="glyphicon glyphicon-arrow-down" id="reldt"></span></a></th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -172,50 +115,51 @@
                 <tr>
                     <td><input class="checkbox" type="checkbox"></td>
                     <td>1234</td>
-                    <td>efdshviuerg98vaksdf</td>
-                    <td>九江局1</td>
-                    <td>2014.02.05</td>
+                    <td>专利管理，可以如此轻松</td>
+                    <td>叶璐</td>
+                    <td>中献智慧专利</td>
                     <td>2015.02.05</td>
-                    <td><a href="javascript:toRenew();">[续费]</a> <a href="javascript:toRenew_history();">[历史续费信息]</a> <a href="javascript:toEditMember();">[修改]</a> </td>
+                    <td><a href="javascript:toEditMember();">[修改]</a> </td>
                 </tr>
                 <tr>
                     <td><input class="checkbox" type="checkbox"></td>
                     <td>1234</td>
-                    <td>efdshviuerg98vaksdf</td>
-                    <td>九江局1</td>
-                    <td>2014.02.05</td>
+                    <td>专利管理，可以如此轻松</td>
+                    <td>叶璐</td>
+                    <td>中献智慧专利</td>
                     <td>2015.02.05</td>
-                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                    <td><a href="javascript:toEditMember();">[修改]</a> </td>
                 </tr>
                 <tr>
                     <td><input class="checkbox" type="checkbox"></td>
                     <td>1234</td>
-                    <td>efdshviuerg98vaksdf</td>
-                    <td>九江局1</td>
-                    <td>2014.02.05</td>
+                    <td>专利管理，可以如此轻松</td>
+                    <td>叶璐</td>
+                    <td>中献智慧专利</td>
                     <td>2015.02.05</td>
-                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                    <td><a href="javascript:toEditMember();">[修改]</a> </td>
                 </tr>
                 <tr>
                     <td><input class="checkbox" type="checkbox"></td>
                     <td>1234</td>
-                    <td>efdshviuerg98vaksdf</td>
-                    <td>九江局1</td>
-                    <td>2014.02.05</td>
+                    <td>专利管理，可以如此轻松</td>
+                    <td>叶璐</td>
+                    <td>中献智慧专利</td>
                     <td>2015.02.05</td>
-                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                    <td><a href="javascript:toEditMember();">[修改]</a> </td>
                 </tr>
                 <tr>
                     <td><input class="checkbox" type="checkbox"></td>
                     <td>1234</td>
-                    <td>efdshviuerg98vaksdf</td>
-                    <td>九江局1</td>
-                    <td>2014.02.05</td>
+                    <td>专利管理，可以如此轻松</td>
+                    <td>叶璐</td>
+                    <td>中献智慧专利</td>
                     <td>2015.02.05</td>
-                    <td><a href="#">[续费]</a> <a href="#">[历史续费信息]</a> <a href="#">[修改]</a> </td>
+                    <td><a href="javascript:toEditMember();">[修改]</a> </td>
                 </tr>
+
                 <tr class="table-bordered table_bottom">
-                    <td colspan="7"><a class="btn btn-primary disabled" href="#" role="button" style="width: 100px;">删除</a> </td>
+                    <td colspan="7"><a class="btn btn-primary" href="#" role="button" style="width: 100px;">删除</a> </td>
                 </tr>
             </tbody>
         </table>

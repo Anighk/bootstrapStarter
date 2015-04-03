@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="thirdparty/ueditor/themes/default/css/ueditor.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script  src="js/jquery.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="thirdparty/layer/layer.min.js"></script>
+    <script src="thirdparty/ueditor/ueditor.config.js"></script>
+    <script src="thirdparty/ueditor/ueditor.all.js"></script>
+    <script src="js/citylist.js"></script>
+    <script>
+        function cancelBtn(){
+            var index=parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+    <title>新闻编辑</title>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header" style="margin-top: 5px;">
+            <img class="img-rounded" src="images/logo.jpg" width="40px;" height="40px;" >
+        </div>
+        <div class="navbar-header" style="margin-left: 10px;">
+            <a class="navbar-brand" href="login.html">专利通管理工具</a>
+        </div>
+        <div class="collapse navbar-collapse pull-right">
+            <ul class="nav navbar-nav">
+                <li class="navbars"><a href="index.html"><span class="glyphicon glyphicon-user"></span><span style="margin-left: 8px;">用户管理</span></a></li>
+                <li class="navbars"><a href="anls_member.html"><span class="glyphicon glyphicon-edit"></span><span style="margin-left: 8px;">访问统计</span></a></li>
+                <li class="navbars"><a href="news_index.html"><span class="glyphicon glyphicon-list-alt"></span><span style="margin-left: 8px;">新闻管理</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container main">
+    <div class="panel panel-info">
+        <div class="panel-heading">编辑新闻</div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form class="form-horizontal panel_body_form">
+                            <div class="form-group full_width fl">
+                                <label class="control-label li_title fl">标题：</label>
+                                <textarea class="form-control li_content" style="height: 120px;margin-left: 4px;" id="title">${(info.title)!''}</textarea>
+                            </div>
+                            <div class="form-group full_width fl">
+                                <label class="control-label li_title">作者：</label>
+                                <input class="form-control li_content" id="author" type="text" value="${(info.author)!''}">
+                            </div>
+                            <div class="form-group full_width fl">
+                                <label class="control-label li_title">来源：</label>
+                                <input class="form-control li_content" id="source" type="text" value="${(info.source)!''}">
+                            </div>
+                            <div class="form-group full_width fl">
+                                <label class="control-label li_title">发布时间：</label>
+                                <input class="form-control li_content" id="release_date" type="datetime-local" value="${(info.release_date)!''}">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6"><img src="images/test_bigimg.png" style="margin-top: 15px;" width="465px;" height="270px;"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-horizontal">
+                            <label class="control-label li_title fl">内容：</label>
+                            <div class="fl">
+                                <script id="content" type="text/plain"  style="width:900px;height:240px;"></script>
+                            </div>
+                        </form>
+                        <script type="text/javascript" >
+                            var ue = UE.getEditor('content');
+                            function confirm(){
+                                var text=ue.getContent();
+                                alert(text);
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="fr footer_btns">
+        <a class="btn btn-primary footer_btn" href="javascript:confirm();" role="button">确定</a>
+        <a class="btn btn-default footer_btn" href="javascript:cancelBtn();" role="button">取消</a>
+    </div>
+</div>
+
+    <form action="editmember.do" id="edt" method="post">
+        <input type="hidden" name="userid" value="${info.user_id}"/>
+        <input type="hidden" name="nickname"/>
+        <input type="hidden" name="regdate" value="${(info.reg_date)!''}" />
+        <input type="hidden" name="overduedate" />
+        <input type="hidden" name="isvip" />
+        <input type="hidden" name="salesmanager" />
+        <input type="hidden" name="province" />
+        <input type="hidden" name="city" />
+        <input type="hidden" name="company" />
+        <input type="hidden" name="jobtitle" />
+        <input type="hidden" name="contacts" />
+        <input type="hidden" name="tel" />
+        <input type="hidden" name="qq" />
+        <input type="hidden" name="equipment" />
+        <input type="hidden" name="remark" />
+        <input type="hidden" name="pageNow" />
+        <input type="hidden" name="pageSize" />
+    </form>
+</body>
+</html>

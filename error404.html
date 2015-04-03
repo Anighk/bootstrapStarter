@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="thirdparty/bootstrap/css/bootstrap.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="thirdparty/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/alphabet.js"></script>
+    <title>404</title>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header" style="margin-top: 5px;">
+            <img class="img-rounded" src="images/logo.jpg" width="40px;" height="40px;" >
+        </div>
+        <div class="navbar-header" style="margin-left: 10px;">
+            <a class="navbar-brand" href="login.html">专利通管理工具</a>
+        </div>
+        <div class="collapse navbar-collapse pull-right">
+            <ul class="nav navbar-nav">
+                <li class="navbars"><a href="index.html"><span class="glyphicon glyphicon-user"></span><span style="margin-left: 8px;">用户管理</span></a></li>
+                <li class="navbars"><a href="anls_member.html"><span class="glyphicon glyphicon-edit"></span><span style="margin-left: 8px;">访问统计</span></a></li>
+                <li class="navbars"><a href="news_index.html"><span class="glyphicon glyphicon-list-alt"></span><span style="margin-left: 8px;">新闻管理</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <canvas id="myCanvas"></canvas>
+    <script src="js/bubbles.js"></script>
+    <script>
+        var errStr = "404 error!";
+        var letterColors = [red, orange,blue,green,red, orange,blue,green,purple];
+        bubbleShape = "circle";
+        drawName(errStr, letterColors);
+        bounceBubbles();
+    </script>
+    <h1 class="text-center" style="color: orangered">页面未找到</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center"><a href="javascript:history.back(-1);" class="btn btn-primary" style="width: 100px;" role="button">返回</a></div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+</body>
+</html>
